@@ -31,7 +31,7 @@ const upload = multer({
 // Create a new post
 router.post('/', upload.single('image'), async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, author } = req.body;
 
     // Validate inputs
     if (!title || !content) {
@@ -42,7 +42,7 @@ router.post('/', upload.single('image'), async (req, res) => {
     const image = req.file ? req.file.path : null;
 
     // Create and save new post
-    const newPost = new Post({ title, content, images: image ? [image] : [] });
+    const newPost = new Post({ title, content, author, images: image ? [image] : [] });
     const post = await newPost.save();
 
     res.status(201).json(post);
@@ -66,7 +66,7 @@ router.get('/', async (req, res) => {
 // Get a post by ID
 router.get('/:id', async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id); 
+    const post = await Post.findById(req.params.id);
     if (!post) {
       return res.status(404).json({ message: 'Post not found' });
     }
@@ -74,6 +74,72 @@ router.get('/:id', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to fetch post', error: error.message });
+  }
+});
+
+// Update a post by ID
+router.put('/:id', upload.single('image'), async (req, res) => {
+  try {
+    const { title, content} = req.body;
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    // Ensure the user is the author
+    // if (post.author !== author) {
+    //   return res.status(403).json({ message: 'You are not authorized to edit this post' });
+    // }
+
+    // Update post fields
+    post.title = title || post.title;
+    post.content = content || post.content;
+
+    // Replace the image if a new one is uploaded
+    if (req.file) {
+      // Delete the old image file
+      if (post.images.length > 0) {
+        fs.unlinkSync(post.images[0]);
+      }
+      post.images = [req.file.path];
+    }
+
+    const updatedPost = await post.save();
+    res.json(updatedPost);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to update post', error: error.message });
+  }
+});
+
+// Delete a post by ID
+router.delete('/:id', async (req, res) => {
+  try {
+    // const { author } = req.body;
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    // Ensure the user is the author
+    // if (post.author !== author) {
+    //   return res.status(403).json({ message: 'You are not authorized to delete this post' });
+    // }
+
+    // Delete the associated image files
+    if (post.images.length > 0) {
+      post.images.forEach((imagePath) => {
+        fs.unlinkSync(imagePath);
+      });
+    }
+
+    await Post.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Post deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to delete post', error: error.message });
   }
 });
 

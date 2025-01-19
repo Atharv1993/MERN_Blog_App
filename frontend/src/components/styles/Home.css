@@ -13,86 +13,175 @@ body {
     margin: auto;
   }
   
-  /* Header */
-  .home-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
   
-  .home-header h1 {
-    color: #333;
-    font-size: 2.5rem;
-  }
   
-  .home-create-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    text-decoration: none;
-    font-size: 1rem;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .home-create-button:hover {
-    background-color: #45a049;
-  }
-  
-  /* Posts Grid */
-  .posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-  }
-  
-  /* Post Card */
-  .post-card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    padding: 10px;
-  }
-  
-  .post-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .post-image {
-    width: 100%;
-    /* width: 45vw; */
-    height: 200px;
-    object-fit: cover;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-  }
-  
-  .post-content {
-    padding: 1rem;
-    text-align: center;
-  }
-  
-  .post-title {
-    font-size: 1.5rem;
-    color: #333;
-    margin-bottom: 1rem;
-  }
-  
-  .view-post-button {
-    display: inline-block;
-    background-color: #FF9800;
-    color: white;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .view-post-button:hover {
-    background-color: #e68a00;
-  }
-  
+  /* Grid Layout */
+/* .posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+} */
+.posts-grid {
+  column-count: 3; /* Number of columns */
+  column-gap: 1.5rem; /* Space between columns */
+}
+
+/* Post Card */
+/* .post-card {
+  height: fit-content;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+} */
+.post-card {
+  break-inside: avoid; /* Prevent cards from breaking inside columns */
+  margin-bottom: 1.5rem; /* Space between cards */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.post-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.post-details {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.post-title {
+  border-bottom: 2px solid gainsboro;
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.post-content {
+  overflow-wrap: break-word;
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.post-author {
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 0.5rem;
+}
+
+.view-post-button {
+  align-self: start;
+  background-color: #4caf50;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-top: 1rem;
+  transition: background-color 0.3s;
+}
+
+.view-post-button:hover {
+  background-color: #45a049;
+}
+
+/* No Posts Message */
+.no-posts-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Toggle Button  */
+/* Position the toggle container on the left */
+.toggle-container {
+  margin-bottom: 20px;
+  z-index: 1000;
+}
+
+/* Style the label to include slider and text */
+.custom-toggle-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  width: 140px; /* Adjust width to fit the text and circle */
+  height: 40px;
+}
+
+/* Hide the checkbox input */
+.custom-post-toggle {
+  display: none;
+}
+
+/* Create the slider background */
+.custom-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #00e74b, #47d242);
+  border-radius: 20px;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  overflow: hidden; /* Ensure text doesn't go out of bounds */
+  padding: 0 10px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Circle slider */
+.custom-slider::before {
+  content: "";
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  background-color: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Checked state */
+.custom-post-toggle:checked + .custom-slider {
+  background: linear-gradient(to right, #47d242, #00e74b); 
+}
+
+.custom-post-toggle:checked + .custom-slider::before {
+  transform: translateX(100px); /* Adjust based on slider width */
+}
+
+/* Text inside the slider */
+.custom-text {
+  position: absolute;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  pointer-events: none;
+  width: 100%; /* Ensure text takes full width */
+  text-align: center; /* Center the text within the slider */
+  transition: transform 0.3s ease;
+}
+
+/* Adjust text position for checked state */
+.custom-post-toggle:checked + .custom-slider .custom-text {
+  transform: translateX(-40px); /* Align text to stay within bounds on the left */
+}
+
+.custom-slider .custom-text {
+  transform: translateX(20px); /* Default position for text */
+}

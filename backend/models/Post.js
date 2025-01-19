@@ -15,6 +15,11 @@ const PostSchema = new mongoose.Schema({
         type: [String], 
         default: [], // Defaults to an empty array if no images are provided
     },
+    author: { 
+        type: String, 
+        required: true, // Ensures author is mandatory
+        trim: true, // Removes extra whitespace
+    },
     createdAt: { 
         type: Date, 
         default: Date.now, // Automatically sets the current timestamp

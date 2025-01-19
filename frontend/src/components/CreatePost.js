@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
+import AuthContext from "../context/AuthContext";
 import "./styles/CreatePost.css";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
+
+  const { user } = useContext(AuthContext); // Get the logged-in user from context
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]); // Store the selected image file
@@ -17,6 +20,9 @@ const CreatePost = () => {
     formData.append("title", title);
     formData.append("content", content);
     if (image) formData.append("image", image);
+
+    // Include the username of the author
+    formData.append("author", user.username);
 
     try {
       const response = await axios.post("http://localhost:5000/posts", formData, {

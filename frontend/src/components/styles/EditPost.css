@@ -1,0 +1,92 @@
+/* General Container */
+.edit-post-container {
+  max-width: 600px;
+    margin: 2rem auto;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Title */
+.edit-post-title {
+  font-size: 2rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Error Message */
+.error-message {
+  color: #fff;
+  padding: 1rem;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+/* Form Styling */
+.edit-post-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.edit-post-form label {
+  display: block;
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.edit-post-form input,
+.edit-post-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+.edit-post-form input:focus,
+.edit-post-form textarea:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+/* Button */
+.submit-button {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+
+.cancel-button {
+  border:2px solid #45a049;
+  margin-top: 10px;
+  width: 100%;
+  color: #4CAF50;
+  background-color: white;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-button:hover {
+  background-color: #eeeeee;
+  border:2px solid #45a049;
+}
